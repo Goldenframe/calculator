@@ -1,0 +1,32 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-y: hidden;
+}
+
+body{
+    background-color: rgb(53, 53, 53);
+}
+
+.calculator{
+    width: 30%;
+    margin: 5% auto;
+}
+
+.calculator .output{
+    padding: 4% 0;
+    width: 100%;
+    font-size: 1.6em;
+}
+
+.calculator input[type="button"]{
+    margin: 3%;
+    padding: 5%;
+    font-size: 1.6em;
+
+}
+
+.calculator input[type="button"]:first-of-type{
+    margin-left: 0;
+}
