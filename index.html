@@ -9,7 +9,7 @@
   <body>
         <div class="calculator">
           <form action="">
-          <input type="text" class="output" value="" />
+          <input type="text" class="output" aria-label="Expression" value="" />
           <div class="first-row">
             <input
               type="button"
@@ -108,7 +108,7 @@
           id="pow"
           onclick="addInput(this)"
         />
-          <button value="**" id="sqrt" onclick="addInput(this)">sqrt</button>
+          <button type="button" id="sqrt" onclick="calculateSquareRoot()">sqrt</button>
           <input
             type="button"
             value="С"
@@ -127,12 +127,9 @@
             id="even"
             onclick="calculateResult()"
           />
-          <p class="result"></p>
-        </div>
-      </div>
+          <p class="result" role="status"></p>
           </form>
-          
-    </div>
+        </div>
     <script src="script.js"></script>
   </body>
 </html>
