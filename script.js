@@ -22,6 +22,11 @@ function getPreviousResult() {
     result.textContent = '';
 }
 
+function requireFinite(value) {
+    if (!Number.isFinite(value)) throw new Error('Результат не является конечным числом.');
+    return value;
+}
+
 function evaluateExpression(expression) {
     const tokens = expression.match(/(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?|\*\*|[+*/-]|\s+|./gi) ?? [];
     const parts = tokens.filter(token => token.trim());
@@ -37,7 +42,7 @@ function evaluateExpression(expression) {
         if (!/^(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(token ?? '')) {
             throw new Error('Введите корректное выражение.');
         }
-        return Number(token);
+        return requireFinite(Number(token));
     }
 
     function readPower() {
@@ -45,7 +50,7 @@ function evaluateExpression(expression) {
         if (parts[index] !== '**') return base;
 
         index++;
-        return base ** readSigned();
+        return requireFinite(base ** readSigned());
     }
 
     function readSigned() {
@@ -67,7 +72,7 @@ function evaluateExpression(expression) {
             if (operator === '/' && next === 0) {
                 throw new Error('На ноль делить нельзя.');
             }
-            value = operator === '*' ? value * next : value / next;
+            value = requireFinite(operator === '*' ? value * next : value / next);
         }
         return value;
     }
@@ -78,7 +83,7 @@ function evaluateExpression(expression) {
         while (parts[index] === '+' || parts[index] === '-') {
             const operator = parts[index++];
             const next = readProduct();
-            value = operator === '+' ? value + next : value - next;
+            value = requireFinite(operator === '+' ? value + next : value - next);
         }
         return value;
     }
@@ -90,8 +95,7 @@ function evaluateExpression(expression) {
 
 function showCalculation(transform) {
     try {
-        const value = transform(evaluateExpression(output.value));
-        if (!Number.isFinite(value)) throw new Error('Результат не является конечным числом.');
+        const value = requireFinite(transform(evaluateExpression(output.value)));
 
         previousResult = value;
         output.value = value;
